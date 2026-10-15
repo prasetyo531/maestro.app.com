@@ -156,6 +156,19 @@ npm run test:prod
 `npm test` runs the full suite against debug. These npm scripts are shortcuts for the Maestro CLI; no `npm install`
 is needed because the repo has no npm dependencies. To run a single flow directly, pass its app ID with `-e APP_ID=...`.
 
+### Android default Contacts app
+
+The separate Contacts example targets `com.google.android.contacts`, which is available on standard Google Android
+emulator images. Start an Android emulator with the app installed, then run:
+
+```sh
+npm run test:android:contacts
+```
+
+The flow creates a uniquely named synthetic contact and verifies its name and phone number. It leaves that contact
+on the device, so use an emulator or remove the test contact afterward. This example is kept outside `flows/**` and
+does not run as part of the debug/prod app suites.
+
 ## Add a login flow
 
 After changing the button and field labels to match your app, run `.maestro/examples/login.yaml` directly

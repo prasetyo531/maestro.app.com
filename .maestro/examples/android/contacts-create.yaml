@@ -1,0 +1,32 @@
+appId: com.google.android.contacts
+name: Create and verify an Android contact
+tags:
+  - android
+  - android-default
+  - smoke
+env:
+  FIRST_NAME: ${faker.name().firstName()}
+  LAST_NAME: ${faker.name().lastName()}
+  PHONE_NUMBER: ${faker.number().digits(10)}
+---
+- launchApp
+- runFlow:
+    when:
+      visible: "Allow"
+    commands:
+      - tapOn: "Allow"
+- assertVisible:
+    id: ".*floating_action_button.*"
+- tapOn:
+    id: ".*floating_action_button.*"
+- assertVisible: "First name"
+- tapOn: "First name"
+- inputText: ${FIRST_NAME}
+- tapOn: "Last name"
+- inputText: ${LAST_NAME}
+- tapOn: "Phone"
+- inputText: ${PHONE_NUMBER}
+- tapOn: ".*Save.*"
+- assertVisible: ${FIRST_NAME}
+- assertVisible: ${LAST_NAME}
+- assertVisible: ${PHONE_NUMBER}
