@@ -1,0 +1,6 @@
+.env
+.env.debug
+.env.prod
+.env.contacts
+!.env.*.example
+node_modules/

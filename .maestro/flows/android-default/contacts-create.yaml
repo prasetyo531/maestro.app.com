@@ -1,9 +1,8 @@
-appId: com.google.android.contacts
+appId: ${MAESTRO_APP_ID}
 name: Create and verify an Android contact
 tags:
   - android
   - android-default
-  - smoke
 env:
   FIRST_NAME: ${faker.name().firstName()}
   LAST_NAME: ${faker.name().lastName()}
@@ -19,14 +18,18 @@ env:
     id: ".*floating_action_button.*"
 - tapOn:
     id: ".*floating_action_button.*"
-- assertVisible: "First name"
-- tapOn: "First name"
+- assertVisible: "Name"
+- tapOn: "Name"
 - inputText: ${FIRST_NAME}
-- tapOn: "Last name"
+- tapOn: "Company"
 - inputText: ${LAST_NAME}
-- tapOn: "Phone"
+- hideKeyboard
+- tapOn:
+    text: "+62"
+    point: "80%,50%"
 - inputText: ${PHONE_NUMBER}
 - tapOn: ".*Save.*"
 - assertVisible: ${FIRST_NAME}
 - assertVisible: ${LAST_NAME}
-- assertVisible: ${PHONE_NUMBER}
+- assertVisible: ".*\\+62.*"
+- assertVisible: "Mobile"

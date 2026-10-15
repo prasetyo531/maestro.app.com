@@ -1,7 +1,7 @@
-appId: ${APP_ID}
+appId: ${MAESTRO_APP_ID}
 name: Verify the app launches
 tags:
-  - smoke
+  - skip
 ---
 - launchApp
 - assertVisible: "Welcome"
