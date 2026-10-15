@@ -1,6 +1,0 @@
-appId: ${APP_ID}
-tags:
-  - smoke
----
-- launchApp
-- assertVisible: "Welcome"
