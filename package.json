@@ -9,6 +9,6 @@
     "test:smoke": "npm run test:smoke:debug",
     "test:smoke:debug": "maestro test -e APP_ID=com.yourcompany.yourapp.debug .maestro --include-tags=smoke",
     "test:smoke:prod": "maestro test -e APP_ID=com.yourcompany.yourapp .maestro --include-tags=smoke",
-    "test:android:contacts": "maestro test -e APP_ID=com.google.android.contacts .maestro/flows/android-default/contacts-create.yaml"
+    "test:android:contacts": "maestro test .maestro/flows/android-default/contacts-create.yaml"
   }
 }
