@@ -1,0 +1,13 @@
+appId: com.example.app
+tags:
+  - template
+---
+# Template only: update the labels and selectors to match your app before running.
+- launchApp
+- tapOn: "Sign in"
+- tapOn: "Email"
+- inputText: ${TEST_EMAIL}
+- tapOn: "Password"
+- inputText: ${TEST_PASSWORD}
+- tapOn: "Continue"
+- assertVisible: "Home"
