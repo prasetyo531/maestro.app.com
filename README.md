@@ -18,11 +18,103 @@ before running the flows against your app.
 The smoke flow is tagged `smoke`. The login example is kept outside the configured `flows/**` path,
 so it won't accidentally run before its selectors are adapted to the app.
 
-## Prerequisites
+## Install Maestro and prepare a device (macOS)
 
-- Install the [Maestro CLI](https://docs.maestro.dev/maestro-cli/how-to-install-maestro-cli).
-- Install the app on a connected Android device/emulator, or boot an iOS simulator with the app installed.
-- Make sure the app exposes useful accessibility labels or stable resource IDs for its controls.
+The CLI is the primary way to run this repository's suite. These steps assume macOS and zsh.
+For Windows or Linux, use the official [CLI installation guide](https://docs.maestro.dev/maestro-cli/how-to-install-maestro-cli).
+
+### 1. Install Java 17+
+
+Maestro CLI requires Java 17 or newer. Install a JDK such as [Eclipse Temurin](https://adoptium.net/temurin/releases/),
+then check that Java is available:
+
+```sh
+java -version
+```
+
+If `JAVA_HOME` is not set, add this line to `~/.zshrc` (use `21` if that is the JDK version you installed):
+
+```sh
+export JAVA_HOME=$(/usr/libexec/java_home -v 17)
+```
+
+Reload the shell with `source ~/.zshrc`, then verify `echo "$JAVA_HOME"` points to the JDK.
+
+### 2. Install the Maestro CLI
+
+Run the official installer:
+
+```sh
+curl -fsSL "https://get.maestro.mobile.dev" | bash
+```
+
+Open a new terminal if needed, then verify the CLI is on your `PATH`:
+
+```sh
+maestro --help
+```
+
+### 3. Set up an Android device (if testing Android)
+
+1. Install [Android Studio](https://developer.android.com/studio).
+2. In Android Studio, install the Android SDK and **Android SDK Platform-Tools** from **Settings → Languages & Frameworks → Android SDK**.
+3. In **Device Manager**, create and start an emulator. A physical device with USB debugging enabled also works.
+4. If `adb` is not found, add the SDK platform-tools directory to your `~/.zshrc`. The default SDK path on macOS is:
+
+   ```sh
+   export ANDROID_HOME="$HOME/Library/Android/sdk"
+   export PATH="$PATH:$ANDROID_HOME/platform-tools"
+   ```
+
+5. Reload the shell and check that the device is listed:
+
+   ```sh
+   source ~/.zshrc
+   adb devices
+   ```
+
+### 4. Set up an iOS simulator (if testing iOS)
+
+1. Install and open [Xcode](https://apps.apple.com/app/xcode/id497799835), then complete its first-launch setup.
+2. Install Xcode Command Line Tools if needed:
+
+   ```sh
+   xcode-select --install
+   ```
+
+3. In Xcode, open **Window → Devices and Simulators**, choose **Simulators**, and boot a simulator.
+4. Verify Xcode and the simulator are available:
+
+   ```sh
+   xcodebuild -version
+   xcrun simctl list devices available
+   ```
+
+Maestro's documented iOS flow uses simulators. Install or build the app for the simulator before running its test.
+
+### 5. Install the app under test
+
+Maestro automates an installed app. Build a test version of your app, then install it on the running device. For example:
+
+```sh
+# Android APK
+adb install path/to/app.apk
+
+# iOS Simulator .app bundle
+xcrun simctl install booted path/to/App.app
+```
+
+Then set its Android package name or iOS bundle ID in `.maestro/config.yaml` and update the `Welcome` assertion in
+the smoke flow to text visible on the first screen.
+
+Make sure the app exposes useful accessibility labels or stable resource IDs for its controls.
+
+### Optional: install Maestro Studio
+
+Studio is useful for exploring selectors and debugging a flow visually. Download [MaestroStudio.dmg](https://studio.maestro.dev/MaestroStudio.dmg),
+open it, and drag Maestro Studio into **Applications**. Start an emulator or simulator, open the project folder as a
+workspace, and select the running device. Use the CLI commands below to run the configured suite: Studio currently
+doesn't support the workspace `config.yaml` file.
 
 ## Configure the app
 
