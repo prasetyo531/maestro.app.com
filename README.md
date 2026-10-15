@@ -18,6 +18,9 @@ before running the flows against your app.
 The smoke flow is tagged `smoke`. The login example is kept outside the configured `flows/**` path,
 so it won't accidentally run before its selectors are adapted to the app.
 
+> **macOS Finder:** `.maestro` starts with a dot, so Finder hides it by default. Press **⌘ + Shift + .**
+> while viewing the repository to show or hide dotfiles.
+
 ## Install Maestro and prepare a device (macOS)
 
 The CLI is the primary way to run this repository's suite. These steps assume macOS and zsh.
