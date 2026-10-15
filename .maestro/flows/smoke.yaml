@@ -1,0 +1,7 @@
+appId: ${APP_ID}
+name: Verify the app launches
+tags:
+  - smoke
+---
+- launchApp
+- assertVisible: "Welcome"

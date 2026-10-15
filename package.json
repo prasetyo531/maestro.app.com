@@ -1,8 +1,14 @@
 {
-  "name": "maestro-android-contacts-test",
+  "name": "maestro-ui-tests",
   "private": true,
   "scripts": {
-    "test": "npm run test:android:contacts",
-    "test:android:contacts": "maestro test .maestro/flows/contacts-create.yaml"
+    "test": "npm run test:debug",
+    "test:debug": "maestro test -e APP_ID=com.yourcompany.yourapp.debug .maestro",
+    "test:prod": "maestro test -e APP_ID=com.yourcompany.yourapp .maestro",
+    "test:release": "npm run test:prod",
+    "test:smoke": "npm run test:smoke:debug",
+    "test:smoke:debug": "maestro test -e APP_ID=com.yourcompany.yourapp.debug .maestro --include-tags=smoke",
+    "test:smoke:prod": "maestro test -e APP_ID=com.yourcompany.yourapp .maestro --include-tags=smoke",
+    "test:android:contacts": "maestro test .maestro/examples/android/contacts-create.yaml"
   }
 }
