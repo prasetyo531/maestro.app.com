@@ -1,4 +1,4 @@
-appId: com.google.android.contacts
+appId: ${APP_ID}
 name: Create and verify an Android contact
 tags:
   - android

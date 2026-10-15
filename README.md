@@ -52,7 +52,7 @@ maestro --help
    adb devices
    ```
 
-Install the app build you want to test on the emulator. The app-specific smoke flow uses the visible text `Welcome` as a sample assertion; update it in `.maestro/flows/smoke.yaml` to match your app.
+Install the app build you want to test on the emulator. The app-specific smoke flow uses the visible text `Welcome` as a sample assertion; update it in `.maestro/flows/app/smoke.yaml` to match your app.
 
 ## Choose the app build
 
@@ -63,7 +63,7 @@ Update the app IDs in `package.json` to your Android package names. Both app bui
 "test:prod": "maestro test -e APP_ID=com.yourcompany.yourapp .maestro"
 ```
 
-The `APP_ID` is passed to `.maestro/config.yaml` and used by the smoke flow. Change the sample IDs to your debug and release-ready package IDs.
+The `APP_ID` is passed to the flow at runtime. `config.yaml` limits the app suite to `.maestro/flows/app/**`. Change the sample IDs to your debug and release-ready package IDs.
 
 ## Run the app-specific test
 
@@ -78,11 +78,11 @@ npm run test:smoke       # smoke test on debug
 npm run test:smoke:prod  # smoke test on release-ready / production
 ```
 
-The smoke flow is a starter test under `.maestro/flows/`; add app-specific flows there when ready. Both build variants use the same flows, selected by the `APP_ID` passed in the npm script.
+The smoke flow is a starter test under `.maestro/flows/app/`; add app-specific flows there when ready. Both build variants use the same flows, selected by the `APP_ID` passed in the npm script.
 
 ## Run the Android Contacts test
 
-The separate test targets `com.google.android.contacts` and is outside `.maestro/flows/`, so it is not included in the debug or release-ready app suite. Start an emulator with Google Contacts installed, then run:
+The Contacts test lives under `.maestro/flows/android-default/`. It is not included in debug or release-ready app suites because `config.yaml` only discovers flows under `.maestro/flows/app/`. Start an emulator with Google Contacts installed, then run:
 
 ```sh
 npm run test:android:contacts
