@@ -1,0 +1,4 @@
+# Local test credentials. Commit only the example template.
+.env
+.env.*
+!.env.example

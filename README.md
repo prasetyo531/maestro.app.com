@@ -151,16 +151,30 @@ maestro test --config .maestro/config.yaml .maestro/flows/smoke.yaml
 ## Add a login flow
 
 Copy `.maestro/examples/login.yaml` into `.maestro/flows/` after changing the button and field labels to
-match your app. It uses runtime parameters for credentials, so secrets don't need to live in the YAML:
+match your app and replacing its `appId` with your app's ID. It uses runtime parameters for credentials,
+so secrets don't need to live in the YAML.
+
+Create a local `.env` file from the checked-in template and put your test account credentials in it:
 
 ```sh
+cp .env.example .env
+```
+
+Load those values into the current shell, then pass them to Maestro with `-e`:
+
+```sh
+set -a
+source .env
+set +a
+
 maestro test \
   -e TEST_EMAIL="$TEST_EMAIL" \
   -e TEST_PASSWORD="$TEST_PASSWORD" \
   .maestro/flows/login.yaml
 ```
 
-Use dedicated test accounts and store credentials in your CI secret manager. Don't commit real credentials.
+`.env` is ignored by Git; `.env.example` is safe to commit because it contains only dummy values. Use dedicated
+test accounts and store credentials in your CI secret manager. Don't commit real credentials.
 
 ## CI and reports
 
