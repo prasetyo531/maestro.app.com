@@ -130,19 +130,20 @@ config files for each platform.
 
 ## Run the tests
 
-Run the smoke test:
+With Maestro CLI installed, the app installed, and an emulator or simulator running, run the smoke test:
 
 ```sh
-maestro test .maestro --include-tags=smoke
+npm run test:smoke
 ```
 
 Run all flows discovered under `.maestro/flows`:
 
 ```sh
-maestro test .maestro
+npm test
 ```
 
-Run a single flow directly:
+These npm scripts are shortcuts for the Maestro CLI; no `npm install` is needed because the repo has no npm dependencies.
+To run a single flow directly:
 
 ```sh
 maestro test --config .maestro/config.yaml .maestro/flows/smoke.yaml

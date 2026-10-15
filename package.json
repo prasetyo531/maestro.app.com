@@ -1,0 +1,8 @@
+{
+  "name": "maestro-ui-tests",
+  "private": true,
+  "scripts": {
+    "test": "maestro test .maestro",
+    "test:smoke": "maestro test .maestro --include-tags=smoke"
+  }
+}
