@@ -1,3 +1,4 @@
+appId: ${APP_ID}
 tags:
   - smoke
 ---

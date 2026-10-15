@@ -1,3 +1,2 @@
-appId: com.example.app
 flows:
   - "flows/**"

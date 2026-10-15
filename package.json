@@ -2,7 +2,11 @@
   "name": "maestro-ui-tests",
   "private": true,
   "scripts": {
-    "test": "maestro test .maestro",
-    "test:smoke": "maestro test .maestro --include-tags=smoke"
+    "test": "npm run test:debug",
+    "test:debug": "maestro test -e APP_ID=com.yourcompany.yourapp.debug .maestro",
+    "test:prod": "maestro test -e APP_ID=com.yourcompany.yourapp .maestro",
+    "test:smoke": "npm run test:smoke:debug",
+    "test:smoke:debug": "maestro test -e APP_ID=com.yourcompany.yourapp.debug .maestro --include-tags=smoke",
+    "test:smoke:prod": "maestro test -e APP_ID=com.yourcompany.yourapp .maestro --include-tags=smoke"
   }
 }

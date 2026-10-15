@@ -121,39 +121,46 @@ doesn't support the workspace `config.yaml` file.
 
 ## Configure the app
 
-Edit `.maestro/config.yaml` and replace `com.example.app` with the Android package name or iOS bundle ID.
-Then update the `Welcome` assertion in `.maestro/flows/smoke.yaml` to text that is visible on the initial
-screen. Keep assertions user-facing and stable; prefer accessibility labels or IDs over screen coordinates.
+Update the `APP_ID` values in `package.json` to the debug and production package names/bundle IDs. Each flow
+uses `${APP_ID}`, so the scripts select the matching app without duplicating flows. The corresponding build
+must already be installed on the device. Also update the `Welcome` assertion in `.maestro/flows/smoke.yaml`
+to text visible on the initial screen. Keep assertions user-facing and stable; prefer accessibility labels
+or IDs over screen coordinates.
 
-If Android and iOS use different app IDs, put `appId` in the relevant flow files or keep separate
-config files for each platform.
+If Android and iOS also use different IDs, set the matching ID in the npm script you use for that
+platform, or add separate platform-specific scripts.
 
 ## Run the tests
 
-With Maestro CLI installed, the app installed, and an emulator or simulator running, run the smoke test:
+With Maestro CLI installed, the matching app build installed, and an emulator or simulator running, run the
+debug smoke test:
 
 ```sh
 npm run test:smoke
 ```
 
-Run all flows discovered under `.maestro/flows`:
+`test:smoke` defaults to the debug app. To select a build explicitly:
 
 ```sh
-npm test
+npm run test:smoke:debug
+npm run test:smoke:prod
 ```
 
-These npm scripts are shortcuts for the Maestro CLI; no `npm install` is needed because the repo has no npm dependencies.
-To run a single flow directly:
+Run the full suite against either app:
 
 ```sh
-maestro test --config .maestro/config.yaml .maestro/flows/smoke.yaml
+npm run test:debug
+npm run test:prod
 ```
+
+`npm test` runs the full suite against debug. These npm scripts are shortcuts for the Maestro CLI; no `npm install`
+is needed because the repo has no npm dependencies. To run a single flow directly, pass its app ID with `-e APP_ID=...`.
 
 ## Add a login flow
 
-Copy `.maestro/examples/login.yaml` into `.maestro/flows/` after changing the button and field labels to
-match your app and replacing its `appId` with your app's ID. It uses runtime parameters for credentials,
-so secrets don't need to live in the YAML.
+After changing the button and field labels to match your app, run `.maestro/examples/login.yaml` directly
+or copy it into `.maestro/flows/` when it's ready to join the full suite. It uses `APP_ID` plus runtime
+parameters for credentials, so secrets don't need to live in the YAML.
 
 Create a local `.env` file from the checked-in template and put your test account credentials in it:
 
@@ -169,9 +176,10 @@ source .env
 set +a
 
 maestro test \
+  -e APP_ID=com.yourcompany.yourapp.debug \
   -e TEST_EMAIL="$TEST_EMAIL" \
   -e TEST_PASSWORD="$TEST_PASSWORD" \
-  .maestro/flows/login.yaml
+  .maestro/examples/login.yaml
 ```
 
 `.env` is ignored by Git; `.env.example` is safe to commit because it contains only dummy values. Use dedicated
